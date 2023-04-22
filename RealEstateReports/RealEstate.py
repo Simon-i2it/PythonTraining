@@ -2,10 +2,11 @@ import numpy
 import pandas
 
 from enum import Enum
-
 from pandas import DataFrame
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import landscape, A4, A3
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import landscape, A4
+from reportlab.platypus import SimpleDocTemplate, Table
 
 
 class Column(Enum):
@@ -15,15 +16,6 @@ class Column(Enum):
     bathrooms = "bathrooms"
     property_type = "property_type"
     square_footage = "square_footage"
-
-
-class Margin(Enum):
-    top = 50
-    left = 50
-    indentation = 20
-    row_height = 30
-    column_width = 150
-    title_position = 550
 
 
 class RealEstate:
@@ -62,61 +54,48 @@ class RealEstate:
         )
 
     @staticmethod
-    def export_dataframe_to_pdf(file_name: str, title: str, data_frame: DataFrame, pagesize: tuple[float,float]):
-        column_names = data_frame.index.names + list(data_frame.columns)
-        column_values = [
-            [row.name] + list(row.values) for _, row in data_frame.iterrows()
-        ]
+    def export_dataframe_to_pdf(
+        title: str, data_frame: DataFrame, pagesize: tuple[float, float]
+    ):
+        pdf_row_px = 20
+        pdf_margin_px = 80
 
-        pdf_file = canvas.Canvas(file_name, pagesize=landscape(pagesize))
-
-        pdf_file.drawString(
-            Margin.left.value,
-            Margin.title_position.value,
-            title,
+        data_frame = data_frame.reset_index()
+        pdf_file = canvas.Canvas(f"RealEstateReports/{title}.pdf", pagesize, bottomup=100)
+        data = [list(data_frame)] + data_frame.values.tolist()
+        
+        table = Table(data)
+        table.wrapOn(pdf_file, 0, 0)
+        table.drawOn(
+            pdf_file,
+            pdf_margin_px,
+            pagesize[1] - pdf_row_px * data_frame.shape[0] - pdf_margin_px,
         )
 
-        for index, column_name in enumerate(column_names):
-            pdf_file.drawString(
-                Margin.left.value
-                + Margin.indentation.value
-                + index * Margin.column_width.value,
-                Margin.title_position.value - Margin.row_height.value * 2,
-                column_name,
-            )
-
-        for x, row in enumerate(column_values):
-            for y, value in enumerate(row):
-                pdf_file.drawString(
-                    Margin.top.value
-                    + Margin.indentation.value
-                    + y * Margin.column_width.value,
-                    Margin.title_position.value
-                    - Margin.row_height.value * 2
-                    - (x + 1) * Margin.row_height.value,  # + 1 for header
-                    str(value),
-                )
-
+        pdf_file.drawString(
+            pdf_margin_px, pagesize[1] - pdf_margin_px + 30, f"{title} :-"
+        )
         pdf_file.save()
 
     # Execution
 
-    data_frame = read_csv_file("RealEstateApp/PropertyData.csv")
+    data_frame = read_csv_file("RealEstateReports/PropertyData.csv")
+    replacements = {"get": "report", "_": " "}
 
     export_dataframe_to_pdf(
-        f"RealEstateApp/{get_average_price_square_footage_by_location.__name__}.pdf",
-        "Average Price and Square Footage of property in each Location :-",
-        get_average_price_square_footage_by_location(data_frame), A4
+        "1. Average Price and Square Footage of property in each Location",
+        get_average_price_square_footage_by_location(data_frame),
+        landscape(A4),
     )
 
     export_dataframe_to_pdf(
-        f"RealEstateApp/{get_average_rooms_by_property_type.__name__}.pdf",
-        "Average Number of Bed and Bath rooms in a property for each property type :-",
-        get_average_rooms_by_property_type(data_frame), A4
+        "2. Average Number of Bed and Bath rooms in a property for each property type",
+        get_average_rooms_by_property_type(data_frame),
+        landscape(A4),
     )
 
     export_dataframe_to_pdf(
-        f"RealEstateApp/{get_summary_by_location_property_type.__name__}.pdf",
-        "Property's average Price, Square Footage, Number of Bed and Bath rooms in each property type and location :-",
-        get_summary_by_location_property_type(data_frame), A3
+        "3. Property's average Price, Square Footage, Number of Bed and Bath rooms in each property type and location",
+        get_summary_by_location_property_type(data_frame),
+        landscape(A4),
     )
