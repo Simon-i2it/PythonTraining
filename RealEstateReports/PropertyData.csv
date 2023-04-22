@@ -1,4 +1,4 @@
-property_type,location,price,bedrooms,bathrooms,square_footage
+PropertyType,Location,Price,Bedrooms,Bathrooms,Area
 Villa,Coimbatore,94.95,5,5,4989
 Independent House,Madurai,66.56,2,2,3715
 Apartment,Chennai,52.73,2,3,2183

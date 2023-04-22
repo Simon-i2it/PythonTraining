@@ -1,4 +1,3 @@
-import numpy
 import pandas
 
 from enum import Enum
@@ -10,12 +9,12 @@ from reportlab.lib.pagesizes import landscape, A4
 
 
 class Column(Enum):
-    price = "price"
-    location = "location"
-    bedrooms = "bedrooms"
-    bathrooms = "bathrooms"
-    property_type = "property_type"
-    square_footage = "square_footage"
+    price = "Price"
+    location = "Location"
+    bedrooms = "Bedrooms"
+    bathrooms = "Bathrooms"
+    property_type = "PropertyType"
+    area = "Area"
 
 
 class RealEstate:
@@ -28,7 +27,7 @@ class RealEstate:
         return data_frame.groupby([Column.location.value]).agg(
             {
                 Column.price.value: lambda x: f"Rs : {x.mean():.2f} Lakhs",
-                Column.square_footage.value: lambda x: f"{x.mean():.2f} sq.ft",
+                Column.area.value: lambda x: f"{x.mean():.2f} sq.ft",
             }
         )
 
@@ -47,9 +46,9 @@ class RealEstate:
         ).agg(
             {
                 Column.price.value: lambda x: f"Rs : {x.mean():.2f} Lakhs",
-                Column.square_footage.value: lambda x: f"{x.mean():.2f} sq.ft",
-                Column.bedrooms.value: lambda x: numpy.round(x.mean()),
-                Column.bathrooms.value: lambda x: numpy.round(x.mean()),
+                Column.area.value: lambda x: f"{x.mean():.2f} sq.ft",
+                Column.bedrooms.value: lambda x: x.mean().__format__("{:.2f}"),
+                Column.bathrooms.value: lambda x: x.mean().__format__("{:.2f}"),
             }
         )
 
@@ -60,22 +59,26 @@ class RealEstate:
         pdf_row_px = 20
         pdf_margin_px = 80
 
-        pdf_file = canvas.Canvas(f"RealEstateReports/{title}.pdf", pagesize, bottomup=100)
+        pdf_file = canvas.Canvas(
+            f"RealEstateReports/{title}.pdf", pagesize, bottomup=100
+        )
         pdf_file.drawString(
             pdf_margin_px, pagesize[1] - pdf_margin_px + 30, f"{title} :-"
         )
 
         data_frame = data_frame.reset_index()
         data = [list(data_frame)] + data_frame.values.tolist()
-        
+
         table = Table(data)
-        table_style = TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#DCE6F1')), # Header row
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#333333')), # Header text color
-            ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#F7FBFF')), # Data rows
-            ('TEXTCOLOR', (0, 1), (-1, -1), colors.HexColor('#333333')), # Data text color
-            ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#E2E2E2')) # Table grid
-            ])
+        table_style = TableStyle(
+            [
+                ("GRID", (0, 0), (-1, -1), 1, colors.darkred),  # Table grid
+                ("BACKGROUND", (0, 0), (-1, 0), colors.bisque),  # Header row
+                ("TEXTCOLOR", (0, 0), (-1, 0), colors.crimson),  # Header text color
+                ("BACKGROUND", (0, 1), (-1, -1), colors.cornsilk),  # Data rows
+                ("TEXTCOLOR", (0, 1), (-1, -1), colors.black),  # Data text color
+            ]
+        )
         table.setStyle(table_style)
 
         table.wrapOn(pdf_file, 0, 0)
