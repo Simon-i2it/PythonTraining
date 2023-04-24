@@ -47,8 +47,8 @@ class RealEstate:
             {
                 Column.price.value: lambda x: f"Rs : {x.mean():.2f} Lakhs",
                 Column.area.value: lambda x: f"{x.mean():.2f} sq.ft",
-                Column.bedrooms.value: lambda x: x.mean().__format__("{:.2f}"),
-                Column.bathrooms.value: lambda x: x.mean().__format__("{:.2f}"),
+                Column.bedrooms.value: lambda x: x.mean(),
+                Column.bathrooms.value: lambda x: x.mean(),
             }
         )
 
