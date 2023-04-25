@@ -42,7 +42,11 @@ def month_not_found(month) -> HttpResponse:
 def get_monthly_challenge_str(request: HttpRequest, month: str):
     if month in monthly_challenges:
         challenge = monthly_challenges[month]
-        return render(request, "challenges/challenge.html")
+        return render(
+            request,
+            "challenges/challenge.html",
+            {"month": month.capitalize, "challenge": challenge},
+        )
     else:
         return month_not_found(month)
 
