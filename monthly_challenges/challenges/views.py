@@ -1,6 +1,6 @@
 import random
 
-from django.shortcuts import render
+from django.urls import reverse
 from django.http import (
     HttpRequest,
     HttpResponse,
@@ -59,11 +59,12 @@ def get_challenge(request: HttpRequest, month: str) -> HttpResponse:
 def get_challenge_by_month_number(request: HttpRequest, month: int) -> HttpResponse:
     response: HttpResponse = HttpResponseNotFound(month_not_found(month))
 
-    monthly_challenges_by_month_number = {
+    monthly_challenges_by_number = {
         i + 1: value for i, value in enumerate(monthly_challenges.keys())
     }
 
-    if month in monthly_challenges_by_month_number:
-        return HttpResponseRedirect(monthly_challenges_by_month_number[month])
+    if month in monthly_challenges_by_number:
+        redirect_path = reverse("get_challenge_str", args=[monthly_challenges_by_number[month]])
+        return HttpResponseRedirect(redirect_path)
     else:
         return month_not_found(month)

@@ -5,5 +5,5 @@ urlpatterns = [
     path("january", views.january),
     path("february", views.february),
     path("<int:month>", views.get_challenge_by_month_number),
-    path("<str:month>", views.get_challenge),
+    path("<str:month>", views.get_challenge, name="get_challenge_str"),
 ]
