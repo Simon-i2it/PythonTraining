@@ -1,12 +1,11 @@
 import random
 
-from django.template.loader import render_to_string
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import (
     HttpRequest,
     HttpResponse,
     HttpResponseNotFound,
-    HttpResponseRedirect,
 )
 
 # Create your views here.
@@ -30,44 +29,25 @@ monthly_challenges = {
 def index(request: HttpRequest):
     html_data = ""
     for _, value in enumerate(monthly_challenges.keys()):
-        redirect_path = reverse("get_challenge_str", args=[value])
+        redirect_path = reverse("get_monthly_challenge_str", args=[value])
         html_data += f'<li><a href="{redirect_path}">{value.capitalize()}</a></li>'
     html_data = f"<ul>{html_data}</ul>"
     return HttpResponse(html_data)
-
-
-def get_monthly_challenges(month: str):
-    if month in monthly_challenges:
-        challenge = monthly_challenges[month]
-        return HttpResponse(render_to_string(template_name="challenges/challenge.html"))
-    else:
-        return month_not_found(month)
 
 
 def month_not_found(month) -> HttpResponse:
     return HttpResponseNotFound(f"Month '{month}' is not found")
 
 
-def january(request: HttpRequest):
-    return get_monthly_challenges("january")
-
-
-def february(request: HttpRequest):
-    return get_monthly_challenges("february")
-
-
-def get_challenge(request: HttpRequest, month: str) -> HttpResponse:
-    response: HttpResponse = month_not_found(month)
-    if month == "january":
-        response = january(request)
-    elif month == "february":
-        response = february(request)
+def get_monthly_challenge_str(request: HttpRequest, month: str):
+    if month in monthly_challenges:
+        challenge = monthly_challenges[month]
+        return render(request, "challenges/challenge.html")
     else:
-        response = get_monthly_challenges(month)
-    return response
+        return month_not_found(month)
 
 
-def get_challenge_by_month_number(request: HttpRequest, month: int) -> HttpResponse:
+def get_monthly_challenge_int(request: HttpRequest, month: int) -> HttpResponse:
     response: HttpResponse = HttpResponseNotFound(month_not_found(month))
 
     monthly_challenges_by_number = {
@@ -76,7 +56,7 @@ def get_challenge_by_month_number(request: HttpRequest, month: int) -> HttpRespo
 
     if month in monthly_challenges_by_number:
         month_str = monthly_challenges_by_number[month]
-        redirect_path = reverse("get_challenge_str", args=[month_str])
-        return HttpResponseRedirect(redirect_path)
+        redirect_path = reverse("get_monthly_challenge_str", args=[month_str])
+        return redirect(redirect_path)
     else:
         return month_not_found(month)
