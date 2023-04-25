@@ -1,7 +1,12 @@
 import random
 
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
+from django.http import (
+    HttpRequest,
+    HttpResponse,
+    HttpResponseNotFound,
+    HttpResponseRedirect,
+)
 
 # Create your views here.
 
@@ -20,45 +25,45 @@ monthly_challenges = {
     "december": f"Learn a new language for {random.randint(15, 30)} minutes every day",
 }
 
-print(monthly_challenges)
+
+def get_monthly_challenges(month: str):
+    if month in monthly_challenges:
+        return HttpResponse(monthly_challenges[month])
+    else:
+        return month_not_found(month)
+
+
+def month_not_found(month) -> HttpResponse:
+    return HttpResponseNotFound(f"Month '{month}' is not found")
 
 
 def january(request: HttpRequest):
-    return HttpResponse(monthly_challenges["january"])
+    return get_monthly_challenges("january")
 
 
 def february(request: HttpRequest):
-    return HttpResponse(monthly_challenges["february"])
-
-
-def march(request: HttpRequest):
-    return HttpResponse(monthly_challenges["march"])
+    return get_monthly_challenges("february")
 
 
 def get_challenge(request: HttpRequest, month: str) -> HttpResponse:
-    response = None
+    response: HttpResponse = month_not_found(month)
     if month == "january":
         response = january(request)
     elif month == "february":
         response = february(request)
-    elif month == "march":
-        response = march(request)
     else:
-        try:
-            return HttpResponse(monthly_challenges[month])
-        except:
-            return HttpResponseNotFound(f"Month '{month}' is not supported yet")
+        response = get_monthly_challenges(month)
     return response
 
 
 def get_challenge_by_month_number(request: HttpRequest, month: int) -> HttpResponse:
-    response = None
-    if month == 1:
-        response = january(request)
-    elif month == 2:
-        response = february(request)
-    elif month == 3:
-        response = march(request)
+    response: HttpResponse = HttpResponseNotFound(month_not_found(month))
+
+    monthly_challenges_by_month_number = {
+        i + 1: value for i, value in enumerate(monthly_challenges.keys())
+    }
+
+    if month in monthly_challenges_by_month_number:
+        return HttpResponseRedirect(monthly_challenges_by_month_number[month])
     else:
-        return HttpResponseNotFound(f"Month '{month}' is not supported yet")
-    return response
+        return month_not_found(month)
