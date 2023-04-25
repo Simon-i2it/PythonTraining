@@ -26,6 +26,17 @@ monthly_challenges = {
 }
 
 
+def index(request: HttpRequest):
+    html_data = ""
+    for _, value in enumerate(monthly_challenges.keys()):
+        print(value)
+        redirect_path = reverse("get_challenge_str", args=[value])
+        html_data += f'<li><a href="{redirect_path}">{value.capitalize()}</a></li>'
+    html_data = f"<ul>{html_data}</ul>"
+    # print(html_data)
+    return HttpResponse(html_data)
+
+
 def get_monthly_challenges(month: str):
     if month in monthly_challenges:
         return HttpResponse(monthly_challenges[month])
@@ -60,11 +71,12 @@ def get_challenge_by_month_number(request: HttpRequest, month: int) -> HttpRespo
     response: HttpResponse = HttpResponseNotFound(month_not_found(month))
 
     monthly_challenges_by_number = {
-        i + 1: value for i, value in enumerate(monthly_challenges.keys())
+        index + 1: value for index, value in enumerate(monthly_challenges.keys())
     }
 
     if month in monthly_challenges_by_number:
-        redirect_path = reverse("get_challenge_str", args=[monthly_challenges_by_number[month]])
+        month_str = monthly_challenges_by_number[month]
+        redirect_path = reverse("get_challenge_str", args=[month_str])
         return HttpResponseRedirect(redirect_path)
     else:
         return month_not_found(month)
