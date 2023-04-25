@@ -1,5 +1,6 @@
 import random
 
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.http import (
     HttpRequest,
@@ -29,17 +30,16 @@ monthly_challenges = {
 def index(request: HttpRequest):
     html_data = ""
     for _, value in enumerate(monthly_challenges.keys()):
-        print(value)
         redirect_path = reverse("get_challenge_str", args=[value])
         html_data += f'<li><a href="{redirect_path}">{value.capitalize()}</a></li>'
     html_data = f"<ul>{html_data}</ul>"
-    # print(html_data)
     return HttpResponse(html_data)
 
 
 def get_monthly_challenges(month: str):
     if month in monthly_challenges:
-        return HttpResponse(monthly_challenges[month])
+        challenge = monthly_challenges[month]
+        return HttpResponse(render_to_string(template_name="challenges/challenge.html"))
     else:
         return month_not_found(month)
 
