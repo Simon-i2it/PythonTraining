@@ -6,7 +6,7 @@
 
 {% block body %}
     {% include "challenges/includes/header.html" %}
-    <h1>{{month|title}} Challenge</h1>
+    <h1>{{ month|title }} Challenge</h1>
     {% if challenge is not None %}
         <h2>{{ challenge }}</h2>
     {% else %}

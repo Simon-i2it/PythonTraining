@@ -1,5 +1,6 @@
 import random
 
+from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import (
@@ -62,4 +63,4 @@ def get_monthly_challenge_int(request: HttpRequest, month: int) -> HttpResponse:
 
 
 def month_not_found(month) -> HttpResponse:
-    return HttpResponseNotFound(f"Month '{month}' is not found")
+    return HttpResponseNotFound(render_to_string("404.html"))
