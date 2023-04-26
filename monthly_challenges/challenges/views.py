@@ -17,7 +17,7 @@ monthly_challenges = {
     "april": f"Learn a new skill for {random.randint(15, 30)} minutes every day",
     "may": f"Take {random.randint(5, 10)} photos and edit them",
     "june": f"Complete {random.randint(20, 30)} hours of physical exercise",
-    "july": f"Try a new recipe every day",
+    "july": None,
     "august": f"Journal for {random.randint(10, 20)} minutes every day",
     "september": f"Listen to {random.randint(20, 30)} new songs",
     "october": f"Write {random.randint(500, 1000)} words every day",
