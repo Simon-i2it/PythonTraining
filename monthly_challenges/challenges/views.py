@@ -1,12 +1,11 @@
 import random
 
-from django.template.loader import render_to_string
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import (
     HttpRequest,
     HttpResponse,
-    HttpResponseNotFound,
 )
 
 # Create your views here.
@@ -27,10 +26,10 @@ monthly_challenges = {
 }
 
 
-def index(request: HttpRequest):
+def challenges(request: HttpRequest):
     return render(
         request,
-        "challenges/index.html",
+        "challenges/challenges.html",
         {"months": list(monthly_challenges.keys())},
     )
 
@@ -44,12 +43,10 @@ def get_monthly_challenge_str(request: HttpRequest, month: str):
             {"month": month, "challenge": challenge},
         )
     else:
-        return month_not_found(month)
+        raise Http404(month)
 
 
 def get_monthly_challenge_int(request: HttpRequest, month: int) -> HttpResponse:
-    response: HttpResponse = HttpResponseNotFound(month_not_found(month))
-
     monthly_challenges_by_number = {
         index + 1: value for index, value in enumerate(monthly_challenges.keys())
     }
@@ -59,8 +56,4 @@ def get_monthly_challenge_int(request: HttpRequest, month: int) -> HttpResponse:
         redirect_path = reverse("get_monthly_challenge_str", args=[month_str])
         return redirect(redirect_path)
     else:
-        return month_not_found(month)
-
-
-def month_not_found(month) -> HttpResponse:
-    return HttpResponseNotFound(render_to_string("404.html"))
+        raise Http404(month)
