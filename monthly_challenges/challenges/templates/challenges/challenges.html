@@ -14,7 +14,7 @@
     {% include "challenges/includes/header.html" %}
     <ul>
         {% for month in months %}
-            <li><a href="{% url "get_monthly_challenge_str" month %}">{{ month|title }}</a></li>
+            <li><a href="{% url "url_monthly_challenge_str" month %}">{{ month|title }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

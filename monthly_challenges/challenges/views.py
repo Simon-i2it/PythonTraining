@@ -53,7 +53,7 @@ def get_monthly_challenge_int(request: HttpRequest, month: int) -> HttpResponse:
 
     if month in monthly_challenges_by_number:
         month_str = monthly_challenges_by_number[month]
-        redirect_path = reverse("get_monthly_challenge_str", args=[month_str])
+        redirect_path = reverse("url_monthly_challenge_str", args=[month_str])
         return redirect(redirect_path)
     else:
         raise Http404(month)
