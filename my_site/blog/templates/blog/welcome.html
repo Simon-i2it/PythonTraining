@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Welcome
+{% endblock %}
+
+{% block body %}
+
+    <header id="main-navigation">
+        <h1><a href="">Welcome to my blog</a></h1>
+        <nav>
+            <h2><a href="">Posts</a></h2>
+        </nav>
+    </header>
+
+    <section id ="welcome">
+        <header>
+            <img src="" alt="Simon Alphonse - Author of the blog"/>
+            <h2>Simon Alphonse's blog</h2>
+        </header>
+        <p>I'm a .NET and Python developer working in Ideas2It.</p>
+    </section>
+
+    <section id="latest-posts">
+        <h2><a href="">Latest Posts</a></h2>
+        <ul>
+            <li>
+                <article class="post">
+                    <a href="">
+                        <img src="" alt="Benefits of Microservices"/>
+                    </a>
+                    <div class="post__content">
+                        <h3>Benefits of Microservices</h3>
+                        <p>
+                            Scalability: Microservices architecture allows for horizontal scaling of individual services, which means you can add more instances of a service as needed to handle increased demand. This is particularly useful in high-traffic applications where monolithic applications may struggle to scale effectively.
+                            Flexibility: Microservices architecture allows for greater flexibility when it comes to technology stacks. With a monolithic application, all components must use the same technology stack, which can limit the tools and languages you can use. With microservices, each service can use the technology stack that best fits its purpose, which means you can use the best tool for each job.
+                            Resilience: Microservices architecture is designed to handle failure in individual services without affecting the entire system. If a service fails, it can be quickly replaced or restored without impacting the rest of the system.
+                            Rapid Development: With microservices, developers can work on individual services without affecting the entire system. This allows for faster development and deployment of new features and services.
+                            Improved fault isolation: In a monolithic application, a failure in one part of the application can bring down the entire system. With microservices, each service is isolated, which means that a failure in one service will not affect the others.
+                            Better team organization: Microservices architecture allows for greater team autonomy and ownership. Teams can work on individual services without having to coordinate with other teams, which can lead to faster development and better communication between teams.
+                        </p>
+                    </div>
+                </article>
+            </li>
+        </ul>
+    </section>
+
+    <section id="about">
+        <h2>What I do</h2>
+        <p>I love programming, playing table tennis, enjoy photography and riding cycle</p>
+        <p>Good luck have fun !</p>
+    </section>
+
+{% endblock body %}
