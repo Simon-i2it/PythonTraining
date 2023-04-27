@@ -1,22 +1,20 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     Welcome
 {% endblock %}
 
-{% block body %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'blog/welcome.css' %}">
+{% endblock css %}
 
-    <header id="main-navigation">
-        <h1><a href="">Welcome to my blog</a></h1>
-        <nav>
-            <h2><a href="">Posts</a></h2>
-        </nav>
-    </header>
+{% block body %}
 
     <section id ="welcome">
         <header>
-            <img src="" alt="Simon Alphonse - Author of the blog"/>
-            <h2>Simon Alphonse's blog</h2>
+            <img src="{% static 'blog/images/dp.png' %}" alt="Simon Alphonse - Author of the blog"/>
+            <h2>Simon Alphonse</h2>
         </header>
         <p>I'm a .NET and Python developer working in Ideas2It.</p>
     </section>
@@ -27,17 +25,14 @@
             <li>
                 <article class="post">
                     <a href="">
-                        <img src="" alt="Benefits of Microservices"/>
+                        <img id="round_image" src="{% static 'blog/images/drawing_logo.jpg' %}" alt="Drawing"/>
                     </a>
                     <div class="post__content">
-                        <h3>Benefits of Microservices</h3>
+                        <h3>Drawing Digital Art</h3>
                         <p>
-                            Scalability: Microservices architecture allows for horizontal scaling of individual services, which means you can add more instances of a service as needed to handle increased demand. This is particularly useful in high-traffic applications where monolithic applications may struggle to scale effectively.
-                            Flexibility: Microservices architecture allows for greater flexibility when it comes to technology stacks. With a monolithic application, all components must use the same technology stack, which can limit the tools and languages you can use. With microservices, each service can use the technology stack that best fits its purpose, which means you can use the best tool for each job.
-                            Resilience: Microservices architecture is designed to handle failure in individual services without affecting the entire system. If a service fails, it can be quickly replaced or restored without impacting the rest of the system.
-                            Rapid Development: With microservices, developers can work on individual services without affecting the entire system. This allows for faster development and deployment of new features and services.
-                            Improved fault isolation: In a monolithic application, a failure in one part of the application can bring down the entire system. With microservices, each service is isolated, which means that a failure in one service will not affect the others.
-                            Better team organization: Microservices architecture allows for greater team autonomy and ownership. Teams can work on individual services without having to coordinate with other teams, which can lead to faster development and better communication between teams.
+                            1. Flexibility: Easily make changes, experiment with techniques, colors, and compositions without starting over.
+                            2. Access to tools: Wide range of tools and features, including layers, brushes, filters, and effects.
+                            3. Environmentally friendly: No need for paper, paint, or other traditional art supplies.
                         </p>
                     </div>
                 </article>
