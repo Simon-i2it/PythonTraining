@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ slug }}
+{% endblock title %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'blog/post-detail.css' %}">
+{% endblock css %}
+
+{% block body %}
+<section id="summary">
+    <h2>{{ slug }}</a></h2>
+    <article>
+        <img src="{% static '?' %}" alt="?"/>
+        <address>By Simon</address>
+        <div>
+            Last updated on <time>April 27th</time>
+        </div>
+    </article>
+</section>
+
+<main>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos officia non, quae quas optio tenetur eaque iusto voluptates magni nesciunt explicabo quaerat ut repellendus ab ipsam, numquam provident dolorum deleniti?
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos officia non, quae quas optio tenetur eaque iusto voluptates magni nesciunt explicabo quaerat ut repellendus ab ipsam, numquam provident dolorum deleniti?
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos officia non, quae quas optio tenetur eaque iusto voluptates magni nesciunt explicabo quaerat ut repellendus ab ipsam, numquam provident dolorum deleniti?
+    </p>
+</main>
+{% endblock body %}

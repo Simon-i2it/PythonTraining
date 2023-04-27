@@ -13,4 +13,4 @@ def posts(request: HttpRequest) -> HttpResponse:
 
 
 def post(request: HttpRequest, slug: str) -> HttpResponse:
-    return render(request, "blog/post.html")
+    return render(request, "blog/post-detail.html", {"slug": slug})

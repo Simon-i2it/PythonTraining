@@ -2,13 +2,23 @@
 {% load static %}
 
 {% block title %}
-    Welcome
-{% endblock %}
+    Posts
+{% endblock title %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'blog/welcome.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/post.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/posts.css' %}">
 {% endblock css %}
 
 {% block body %}
-
+<section id="posts">
+    <h2><a href="">Posts</a></h2>
+    <ul>
+        {% include "blog/includes/post.html" %}
+        {% include "blog/includes/post.html" %}
+        {% include "blog/includes/post.html" %}
+        {% include "blog/includes/post.html" %}
+        {% include "blog/includes/post.html" %}
+    </ul>
+</section>
 {% endblock body %}
