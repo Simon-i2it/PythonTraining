@@ -23,21 +23,9 @@
     <section id="latest-posts">
         <h2><a href="">Latest Posts</a></h2>
         <ul>
-            <li>
-                <article class="post">
-                    <a href="">
-                        <img id="round_image" src="{% static 'blog/images/drawing_logo.jpg' %}" alt="Drawing"/>
-                    </a>
-                    <div class="post__content">
-                        <h3>Drawing Digital Art</h3>
-                        <p>
-                            1. Flexibility: Easily make changes, experiment with techniques, colors, and compositions without starting over.
-                            2. Access to tools: Wide range of tools and features, including layers, brushes, filters, and effects.
-                            3. Environmentally friendly: No need for paper, paint, or other traditional art supplies.
-                        </p>
-                    </div>
-                </article>
-            </li>
+            {% for post in posts %}
+                {% include "blog/includes/post-preview.html" %}
+            {% endfor %}
         </ul>
     </section>
 

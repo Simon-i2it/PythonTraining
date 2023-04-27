@@ -14,11 +14,9 @@
 <section id="posts">
     <h2><a href="">Posts</a></h2>
     <ul>
-        {% include "blog/includes/post.html" %}
-        {% include "blog/includes/post.html" %}
-        {% include "blog/includes/post.html" %}
-        {% include "blog/includes/post.html" %}
-        {% include "blog/includes/post.html" %}
+        {% for post in posts %}
+            {% include "blog/includes/post-preview.html" %}
+        {% endfor %}
     </ul>
 </section>
 {% endblock body %}
