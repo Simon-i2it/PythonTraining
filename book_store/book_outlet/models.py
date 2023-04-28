@@ -17,7 +17,7 @@ class Book(models.Model):
         max_digits=2,
         validators=[MinValueValidator(0.0), MaxValueValidator(10.0)],
     )
-    slug = models.SlugField(null=False, db_index=True)
+    slug = models.SlugField(blank=True, null=False, db_index=True)
 
     def __str__(self):
         return f"{self.title} [{self.published_date.strftime('%Y')}] by {self.author} (Rating: {self.rating})"
