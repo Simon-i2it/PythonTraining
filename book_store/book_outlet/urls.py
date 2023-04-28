@@ -1,7 +1,7 @@
+from django.urls import path
 from . import views
-from django.urls import include, path
 
 urlpatterns = [
-    path('insert', views.insert_books),
-    path('print', views.print_books)
+    path('insert_books', views.insert_books),
+    path('get_books', views.get_books)
 ]

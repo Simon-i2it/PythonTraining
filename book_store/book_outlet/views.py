@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
-from .models import Book
+from book_outlet.models import Book
 
 # Create your views here.
 
@@ -23,9 +23,9 @@ def insert_books(request:HttpRequest) -> HttpResponse:
     for book in books:
         book.save()
 
-    return HttpResponse()
+    return HttpResponse(Book.objects.all())
 
-def print_books(request:HttpRequest) -> HttpResponse:
-    
+def get_books(request:HttpRequest) -> HttpResponse:
+
     return HttpResponse(Book.objects.all())
     
