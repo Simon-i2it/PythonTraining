@@ -1,14 +1,31 @@
+from django.db.models import Avg
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from book_outlet.models import Book
 
 # Create your views here.
 
 
-def index(request: HttpRequest) -> HttpResponse:
+def books(request: HttpRequest) -> HttpResponse:
     books = Book.objects.all()
-    return render(request, "book_outlet/index.html", {"books": books})
+    count = books.count()
+    avg_rating = books.aggregate(Avg("rating"))
+    return render(
+        request,
+        "book_outlet/books.html",
+        {"books": books, "count": count, "avg_rating": avg_rating},
+    )
+
+
+def book_int(request: HttpRequest, id: int) -> HttpResponse:
+    book = get_object_or_404(Book, pk=id)
+    return render(request, "book_outlet/book.html", {"book": book})
+
+
+def book_slug(request: HttpRequest, slug: str) -> HttpResponse:
+    book = get_object_or_404(Book, slug=slug)
+    return render(request, "book_outlet/book.html", {"book": book})
 
 
 def insert_books(request: HttpRequest) -> HttpResponse:
@@ -91,4 +108,10 @@ def insert_books(request: HttpRequest) -> HttpResponse:
     for book in books:
         book.save()
 
+    return HttpResponse(Book.objects.all())
+
+
+def save_books(request: HttpRequest) -> HttpResponse:
+    for book in Book.objects.all():
+        book.save()
     return HttpResponse(Book.objects.all())

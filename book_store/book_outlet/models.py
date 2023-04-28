@@ -1,5 +1,8 @@
+from typing import Iterable, Optional
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.urls import reverse
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -14,6 +17,14 @@ class Book(models.Model):
         max_digits=2,
         validators=[MinValueValidator(0.0), MaxValueValidator(10.0)],
     )
+    slug = models.SlugField(null=False, db_index=True)
 
     def __str__(self):
-        return f"{self.title} [{self.published_date.strftime('%Y')}] ({self.rating}*)"
+        return f"{self.title} [{self.published_date.strftime('%Y')}] by {self.author} (Rating: {self.rating})"
+
+    def get_absolute_url(self):
+        return reverse(viewname="url_book_int", args=[self.pk])
+
+    def save(self, *args, **kwargs) -> None:
+        self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
