@@ -1,8 +1,6 @@
 from django.contrib import admin
 
-from book_outlet.models import Book
-
-# Register your models here.
+from book_outlet.models import Address, Author, Book, Country
 
 
 class BookAdmin(admin.ModelAdmin):
@@ -14,4 +12,8 @@ class BookAdmin(admin.ModelAdmin):
     )
 
 
+# Register your models here.
+admin.site.register(Country)
+admin.site.register(Address)
+admin.site.register(Author)
 admin.site.register(Book, BookAdmin)
