@@ -8,7 +8,7 @@ from book_outlet.models import Book
 
 
 def books(request: HttpRequest) -> HttpResponse:
-    books = Book.objects.all()
+    books = Book.objects.all().order_by("-rating")
     count = books.count()
     avg_rating = books.aggregate(Avg("rating"))
     return render(
