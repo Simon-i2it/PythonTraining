@@ -5,11 +5,10 @@
 {% endblock title %}
 
 {% block body %}
-<form>
-    <label for="username">
-        Your Name
-    </label>
-    <input id="username" type="text">
+<form method="POST" action="/">
+    {% csrf_token %}
+    <label for="username">Your Name</label>
+    <input id="username" name="username" type="text"/>
     <button>Send</button>
 </form>
 {% endblock body %}
