@@ -13,12 +13,12 @@ def review(request: HttpRequest):
         form = ReviewForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            review = Review(
+            print(form.cleaned_data)
+            Review.objects.create(
                 username=data["username"],
                 feedback=data["feedback"],
                 rating=data["rating"],
             )
-            review.save()
             return redirect(thank_you, review.username)
     return render(request, "reviews/review.html", {"form": form})
 
