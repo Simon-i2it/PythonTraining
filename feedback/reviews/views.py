@@ -1,5 +1,6 @@
 from django.http import HttpRequest
 from django.shortcuts import redirect, render
+from django.views import View
 
 from reviews.forms import ReviewForm
 from reviews.models import Review
@@ -7,16 +8,19 @@ from reviews.models import Review
 # Create your views here.
 
 
-def review(request: HttpRequest):
-    form = ReviewForm()
-    if request.method == "POST":
+class ReviewView(View):
+    def get(self, request: HttpRequest):
+        form = ReviewForm()
+        return render(request, "reviews/review.html", {"form": form})
+
+    def post(self, request: HttpRequest):
         form = ReviewForm(request.POST)
         # form = ReviewForm(request.POST, Review.objects.get(username="username")) # to update record
         if form.is_valid():
             form.save()
-            return redirect(thank_you, form.cleaned_data["username"])
-    return render(request, "reviews/review.html", {"form": form})
+            return redirect("url-thank-you", form.cleaned_data["username"])
 
 
-def thank_you(request: HttpRequest, username: str):
-    return render(request, "reviews/thank_you.html", {"username": username})
+class ThankYouView(View):
+    def get(self, request: HttpRequest, username: str):
+        return render(request, "reviews/thank_you.html", {"username": username})
