@@ -20,6 +20,9 @@ class ReviewView(FormView):
     template_name = "reviews/review.html"
     success_url = "/thank_you"
 
+    def get_success_url(self) -> str:
+        return f"{super().get_success_url()}/{self.request.POST.get('username')}"
+
     def form_valid(self, form: ReviewForm) -> HttpResponse:
         form.save()
         return super().form_valid(form)
