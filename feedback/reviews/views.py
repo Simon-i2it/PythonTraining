@@ -1,5 +1,6 @@
 from typing import Any
 from django.db.models.query import QuerySet
+from django.urls import reverse
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -15,10 +16,9 @@ class ReviewView(CreateView):
     model = Review
     form_class = ReviewForm
     template_name = "reviews/review.html"
-    success_url = "/thank_you"
 
     def get_success_url(self) -> str:
-        return f"{super().get_success_url()}/{self.request.POST.get('username')}"
+        return reverse("url-thank-you", args=[self.request.POST.get("username")])
 
 
 class ThankYouView(TemplateView):
@@ -31,7 +31,7 @@ class ReviewsView(ListView):
     template_name = "reviews/reviews.html"
 
     def get_queryset(self) -> QuerySet[Any]:
-        return super().get_queryset().filter(rating__lte=2)
+        return super().get_queryset().filter(rating__gte=2)
 
 
 class ReviewDetailView(DetailView):
