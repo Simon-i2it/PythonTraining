@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Reviews
+{% endblock title %}
+
+{% block body %}
+<ul>
+    {% for review in reviews %}
+        <li>{{review.username}} (Rating:{{review.rating}})</li>
+    {% endfor %}
+</ul>
+{% endblock body %}

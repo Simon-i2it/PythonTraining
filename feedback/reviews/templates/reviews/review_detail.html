@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{review.username}}'s Review Details
+{% endblock title %}
+
+{% block body %}
+    <h1>{{review.username}}</h1>
+    <p>{{review.feedback}}</p>
+    <p>{{review.rating}}</p>
+{% endblock body %}
