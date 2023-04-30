@@ -12,12 +12,9 @@ def review(request: HttpRequest):
     if request.method == "POST":
         form = ReviewForm(request.POST)
         # form = ReviewForm(request.POST, Review.objects.get(username="username")) # to update record
-
         if form.is_valid():
-            username = form.cleaned_data["username"]
             form.save()
-            return redirect(thank_you, username)
-
+            return redirect(thank_you, form.cleaned_data["username"])
     return render(request, "reviews/review.html", {"form": form})
 
 
