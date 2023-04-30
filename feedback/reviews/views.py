@@ -1,15 +1,11 @@
-from typing import Any, Dict
+from typing import Any
 from django.db.models.query import QuerySet
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
-
-# from reviews.forms import ReviewForm
+from reviews.forms import ReviewForm
 from reviews.models import Review
 
 # Create your views here.
@@ -17,17 +13,7 @@ from reviews.models import Review
 
 class ReviewView(CreateView):
     model = Review
-    fields = "__all__"
-    # exclude=["rating"]
-    labels = {
-        "username": "Name",
-    }
-    error_messages = {
-        "username": {
-            "required": "Name must not be empty",
-            "max_length": "Please enter a shorter name",
-        }
-    }
+    form_class = ReviewForm
     template_name = "reviews/review.html"
     success_url = "/thank_you"
 
