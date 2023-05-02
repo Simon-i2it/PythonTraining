@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Home{% endblock title %}
-
-{% block body %}
-    BODY
-{% endblock body %}
+{% block jquery %}{% include 'flopkart/includes/jquery.html' %}{% endblock jquery %}
+{% block bootstrap %}{% include 'flopkart/includes/bootstrap.html' %}{% endblock bootstrap %}
+{% block scripts %}{% include 'flopkart/includes/scripts.html' %}{% endblock scripts %}
+{% block styles %}{% include 'flopkart/includes/styles.html' %}{% endblock styles %}
+    
+{% block content %}
+    {% include 'flopkart/includes/banner.html' %}
+    {% include 'flopkart/includes/items.html' %}
+{% endblock content %}
