@@ -16,17 +16,11 @@ class ReviewView(CreateView):
     model = Review
     form_class = ReviewForm
     template_name = "reviews/review.html"
-    success_url = "/thank_you/ok/"
+    # success_url = "/thank_you"
 
-    def form_valid(self, form):
-        try:
-            response = super().form_valid(form)
-        except Exception as e:
-            print(e)
-
-    # def get_success_url(self) -> str:
-    #     return "{self.request.POST.get('username')}"
-    #     # return reverse("url-thank-you", args=[self.request.POST.get("username")])
+    def get_success_url(self) -> str:
+        # return f"/thank_you/{self.request.POST.get('username')}"
+        return reverse("url-thank-you", args=[self.request.POST.get("username")])
 
 
 class ThankYouView(TemplateView):
