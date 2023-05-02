@@ -123,6 +123,8 @@ MEDIA_URL = "/media/"
 
 MEDIA_ROOT = BASE_DIR / "uploads"
 
+SESSION_COOKIE_AGE = 5 * 60  # 5 mins
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
