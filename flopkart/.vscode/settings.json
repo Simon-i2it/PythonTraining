@@ -3,6 +3,7 @@
         "django-html": "html"
     },
     "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
     "python.analysis.typeCheckingMode": "basic",
     "workbench.tree.indent": 20,
     "workbench.colorCustomizations": {
